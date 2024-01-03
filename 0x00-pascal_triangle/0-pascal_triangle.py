@@ -22,4 +22,3 @@ if __name__ == "__main__":
     triangle = pascal_triangle(5)
     for row in triangle:
         print("[{}]".format(",".join([str(x) for x in row])))
-
