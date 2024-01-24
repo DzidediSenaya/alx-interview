@@ -33,8 +33,9 @@ def main():
             status_code, file_size = parse_line(line, status_codes)
             if status_code is not None and file_size is not None:
                 total_size += file_size
-                status_codes[status_code] = status_codes.get
-                (status_code, 0) + 1
+                status_codes[status_code] = (
+                    status_codes.get(status_code, 0) + 1
+                )
 
             if i % 10 == 0:
                 print_stats(total_size, status_codes)
