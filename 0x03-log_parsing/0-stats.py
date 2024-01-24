@@ -3,11 +3,12 @@
 import sys
 
 
-def print_stats(file_size, status_codes):
+def print_stats(file_size, status_codes, is_final=False):
     """Prints the file size and status code statistics."""
-    print("File size: {}".format(file_size))
-    for code in sorted(status_codes.keys()):
-        print("{}: {}".format(code, status_codes[code]))
+    if is_final or len(status_codes) > 0:
+        print("File size: {}".format(file_size))
+        for code in sorted(status_codes.keys()):
+            print("{}: {}".format(code, status_codes[code]))
 
 
 def parse_line(line, status_codes):
@@ -37,13 +38,13 @@ def main():
                     status_codes.get(status_code, 0) + 1
                 )
 
-            if i % 10 == 0:
-                print_stats(total_size, status_codes)
+            if i % 10 == 0 or i == 1:
+                print_stats(total_size, status_codes, i == 1)
 
     except KeyboardInterrupt:
         pass
     finally:
-        print_stats(total_size, status_codes)
+        print_stats(total_size, status_codes, True)
 
 
 if __name__ == "__main__":
