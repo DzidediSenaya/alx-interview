@@ -23,7 +23,7 @@ def solve_nqueens(board, row, n):
     Recursive function to solve N Queens problem
     """
     if row == n:
-        print([[i, board[i]] for i in range(n)])
+        print(*[[i, board[i]] for i in range(n)])
         return
 
     for col in range(n):
