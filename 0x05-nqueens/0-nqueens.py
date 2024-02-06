@@ -1,27 +1,64 @@
 #!/usr/bin/python3
-"""Solving N Queens with Backtracing"""
+"""
+N Queens solved with Backtracing
+"""
 import sys
 
 
-def nqueens(n: int):
+def nqueens(n, row, board):
     """
-    backtracking
+    Method: nqueens - place n queens
+            on an n by n board so that
+            no queens are attacking any
+            others.
+    Parameters:
+        n (int): board size and # of queens
+        row (int): current row
+        board (list): current board state
+    Returns: All possible solutions to
+            placement, in list of lists form
     """
-    matrix = [[0 for x in range(n)] for y in range(n)]
-    print(str(matrix))
+    if row == n:
+        print(board)
+        return
+
+    for col in range(n):
+        if is_safe(board, row, col):
+            board.append([row, col])
+            nqueens(n, row + 1, board)
+            board.pop()
 
 
-if __name__ == "__main__":
-    if len(sys.argv) > 2 or len(sys.argv) < 2:
+def is_safe(board, row, col):
+    """
+    Check if it's safe to place a queen at board[row][col]
+    """
+    for q_row, q_col in board:
+        if col == q_col or row - col == q_row - q_col or row + col == q_row + q_col:
+            return False
+    return True
+
+
+def main():
+    """
+    Main function to solve N Queens problem
+    """
+    if len(sys.argv) != 2:
         print("Usage: nqueens N")
-        exit(1)
+        sys.exit(1)
 
-    if not sys.argv[1].isdigit():
+    try:
+        n = int(sys.argv[1])
+    except ValueError:
         print("N must be a number")
-        exit(1)
+        sys.exit(1)
 
-    if int(sys.argv[1]) < 4:
+    if n < 4:
         print("N must be at least 4")
-        exit(1)
+        sys.exit(1)
 
-    nqueens(int(sys.argv[1]))
+    nqueens(n, 0, [])
+
+
+if __name__ == '__main__':
+    main()
