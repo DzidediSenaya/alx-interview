@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """
-NQueens Problem Solver
+Solution to the N Queens problem
 """
 import sys
-
 
 def is_safe(board, row, col, n):
     """
@@ -16,23 +15,18 @@ def is_safe(board, row, col, n):
             return False
     return True
 
-
 def solve_nqueens(board, row, n):
     """
     Recursive function to solve N Queens problem
     """
     if row == n:
-        res = []
-        for i in range(len(board)):
-            res.append([i, board[i]])
-        print(res)
+        print([[i, board[i]] for i in range(n)])
         return
 
     for col in range(n):
         if is_safe(board, row, col, n):
             board[row] = col
             solve_nqueens(board, row + 1, n)
-
 
 def nqueens(n):
     """
@@ -48,7 +42,6 @@ def nqueens(n):
 
     board = [-1] * n
     solve_nqueens(board, 0, n)
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
