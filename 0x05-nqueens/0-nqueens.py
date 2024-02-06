@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
-N Queens problem solver
+NQueens Problem Solver
 """
-
 import sys
 
 
@@ -23,7 +22,10 @@ def solve_nqueens(board, row, n):
     Recursive function to solve N Queens problem
     """
     if row == n:
-        print([[i, board[i]] for i in range(n)])
+        res = []
+        for i in range(len(board)):
+            res.append([i, board[i]])
+        print(res)
         return
 
     for col in range(n):
@@ -50,7 +52,7 @@ def nqueens(n):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: ./0-nqueens.py N")
+        print("Usage: nqueens N")
         sys.exit(1)
 
     try:
