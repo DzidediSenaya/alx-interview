@@ -2,26 +2,34 @@
 
 const request = require('request');
 
-const req = (arr, i) => {
-  if (i === arr.length) return;
-  request(arr[i], (err, response, body) => {
-    if (err) {
-      throw err;
+// Define a recursive function to make requests for each character URL
+const requestCharacters = (characterUrls, index) => {
+  // Base case: if index exceeds the length of characterUrls, stop recursion
+  if (index === characterUrls.length) return;
+
+  // Make a request for the character URL at the current index
+  request(characterUrls[index], (error, response, body) => {
+    if (error) {
+      console.error(error); // Print error message instead of throwing
     } else {
-      console.log(JSON.parse(body).name);
-      req(arr, i + 1);
+      const characterData = JSON.parse(body);
+      console.log(characterData.name);
+      
+      // Make a recursive call to requestCharacters with the next index
+      requestCharacters(characterUrls, index + 1);
     }
   });
 };
 
-request(
-  `https://swapi-api.hbtn.io/api/films/${process.argv[2]}`,
-  (err, response, body) => {
-    if (err) {
-      throw err;
-    } else {
-      const chars = JSON.parse(body).characters;
-      req(chars, 0);
-    }
+// Make a request to fetch movie data
+request(`https://swapi-api.hbtn.io/api/films/${process.argv[2]}`, (error, response, body) => {
+  if (error) {
+    console.error(error); // Print error message instead of throwing
+  } else {
+    const movieData = JSON.parse(body);
+    const characterUrls = movieData.characters;
+    
+    // Start the recursive function with index 0
+    requestCharacters(characterUrls, 0);
   }
-);
+});
