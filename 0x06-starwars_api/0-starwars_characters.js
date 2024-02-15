@@ -10,7 +10,7 @@ const requestCharacters = (characterUrls, index) => {
   // Make a request for the character URL at the current index
   request(characterUrls[index], (error, response, body) => {
     if (error) {
-      console.error(error);
+      console.error(error); // Print error message instead of throwing
     } else {
       const characterData = JSON.parse(body);
       console.log(characterData.name);
@@ -24,7 +24,7 @@ const requestCharacters = (characterUrls, index) => {
 // Make a request to fetch movie data
 request(`https://swapi-api.hbtn.io/api/films/${process.argv[2]}`, (error, response, body) => {
   if (error) {
-    console.error(error);
+    console.error(error); // Print error message instead of throwing
   } else {
     const movieData = JSON.parse(body);
     const characterUrls = movieData.characters;
