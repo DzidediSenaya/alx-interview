@@ -12,6 +12,9 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
+    # Sort coins in descending order
+    coins.sort(reverse=True)
+
     # Initialize an array to store the minimum number of
     # coins needed for each amount from 0 to total
     dp = [float('inf')] * (total + 1)
@@ -19,6 +22,10 @@ def makeChange(coins, total):
 
     # Iterate through each coin denomination
     for coin in coins:
+        # Check if current coin is greater than total
+        if coin > total:
+            continue
+        
         # Update dp[i] if using the current coin reduces
         # the number of coins needed for amount i
         for i in range(coin, total + 1):
